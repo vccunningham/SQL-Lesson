@@ -33,7 +33,7 @@ namespace SQL_Library {
                 student.Lastname = reader["Lastname"].ToString();
                 student.SAT = Convert.ToInt32(reader["SAT"]);
                 student.GPA = Convert.ToDouble(reader["GPA"]);
-                student.MajorID = Convert.ToInt32(reader["MajorID"]);
+                //student.MajorID = Convert.ToInt32(reader["MajorID"]);
             }
             return students;
         }
