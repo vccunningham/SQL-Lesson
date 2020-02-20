@@ -7,8 +7,12 @@ namespace SQL_Lesson {
             
             var sqlLib = new BcConnection();
             sqlLib.Connect(@"localhost\sqlexpress", "EdDb", "trusted_connection=true");
-            var student = new Student(sqlLib);
-            var students = student.GetAllStudents();
+            StudentController.bcConnection = sqlLib;
+            //var student = new Student(sqlLib);
+            var students = StudentController.GetAllStudents();
+            foreach(var student in students) {
+                Console.WriteLine(student);
+            }
             sqlLib.Disconnect();
         }
     }
