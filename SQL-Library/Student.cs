@@ -15,8 +15,11 @@ namespace SQL_Library {
         public double GPA { get; set; }
         public int? MajorID { get; set; }
 
+        public Major Major { get; set; }
+        
+
         public override string ToString() {
-            return $"{ID} | {Firstname} {Lastname} | {SAT} | {GPA}";
+            return $"{ID} | {Firstname} {Lastname} | {SAT} | {GPA} | {Major?.Description}";
         }
 
 
