@@ -9,10 +9,18 @@ namespace SQL_Lesson {
             sqlLib.Connect(@"localhost\sqlexpress", "EdDb", "trusted_connection=true");
             StudentController.bcConnection = sqlLib;
 
+            InstructorController.bcConnection = sqlLib;
+            var instructors = InstructorController.GetAllInstructors();
+            foreach(var i in instructors) {
+                Console.WriteLine(i);
+            }
+
             MajorController.bcConnection = sqlLib;
+            var major = MajorController.GetMajorByPk(1);
+            Console.WriteLine(major);
             var majors = MajorController.GetAllMajors();
-            foreach(var major in majors) {
-                Console.WriteLine(major);
+            foreach(var m in majors) {
+                Console.WriteLine(m);
             }
             //var student = new Student(sqlLib);
             //var newStudent = new Student {

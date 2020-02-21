@@ -7,6 +7,16 @@ namespace SQL_Library {
     public class StudentController {
 
         public static BcConnection bcConnection { get; set; }
+        private static Student LoadStudentInstance(SqlDataReader reader) {
+            var student = new Student();
+            student.ID = Convert.ToInt32(reader["Id"]);
+            student.Firstname = reader["Firstname"].ToString();
+            student.Lastname = reader["Lastname"].ToString();
+            student.SAT = Convert.ToInt32(reader["SAT"]);
+            student.GPA = Convert.ToDouble(reader["GPA"]);
+            student.MajorID = Convert.IsDBNull(reader["MajorID"]) ? (int?)null : Convert.ToInt32(reader["MajorId"]);
+            return student;
+        }
 
         public static List<Student> GetAllStudents() {
             var sql = "SELECT * From Student s Left Join Major m on m.Id = s.MajorId";
@@ -19,22 +29,22 @@ namespace SQL_Library {
             }
             var students = new List<Student>();
             while (reader.Read()) {
-                var student = new Student();
-                student.ID = Convert.ToInt32(reader["Id"]);
-                student.Firstname = reader["Firstname"].ToString();
-                student.Lastname = reader["Lastname"].ToString();
-                student.SAT = Convert.ToInt32(reader["SAT"]);
-                student.GPA = Convert.ToDouble(reader["GPA"]);
+                //var student = new Student();
+                //student.ID = Convert.ToInt32(reader["Id"]);
+                //student.Firstname = reader["Firstname"].ToString();
+                //student.Lastname = reader["Lastname"].ToString();
+                //student.SAT = Convert.ToInt32(reader["SAT"]);
+                //student.GPA = Convert.ToDouble(reader["GPA"]);
 
-                if (Convert.IsDBNull(reader["Description"])) {
-                    student.Major = null;
-                } else {
-                    var major = new Major {
-                        Description = reader["Description"].ToString(),
-                        MinSAT = Convert.ToInt32(reader["MinSAT"])
-                    };
-                }
-                students.Add(student);
+                //if (Convert.IsDBNull(reader["Description"])) {
+                //    student.Major = null;
+                //} else {
+                //    var major = new Major {
+                //        Description = reader["Description"].ToString(),
+                //        MinSAT = Convert.ToInt32(reader["MinSAT"])
+                //    };
+                //}
+                //students.Add(student);
 
 
                 //student.MajorID = Convert.ToInt32(reader["MajorID"]);
@@ -55,18 +65,20 @@ namespace SQL_Library {
                 return null;
             }
             reader.Read();
-            var student = new Student();
-            student.ID = Convert.ToInt32(reader["Id"]);
-            student.Firstname = reader["Firstname"].ToString();
-            student.Lastname = reader["Lastname"].ToString();
-            student.SAT = Convert.ToInt32(reader["SAT"]);
-            student.GPA = Convert.ToDouble(reader["GPA"]);
-            
+            var student = LoadStudentInstance(reader);
+            //var student = new Student();
+            //student.ID = Convert.ToInt32(reader["Id"]);
+            //student.Firstname = reader["Firstname"].ToString();
+            //student.Lastname = reader["Lastname"].ToString();
+            //student.SAT = Convert.ToInt32(reader["SAT"]);
+            //student.GPA = Convert.ToDouble(reader["GPA"]);
+            //student.MajorID = Convert.IsDBNull(reader["MajorID"])) ? (int?) null : Convert.ToInt32(reader["MajorId]);
+
             reader.Close();
             reader = null;
             return student;
 
-            //student.MajorID = Convert.ToInt32(reader["MajorID"]);
+            
         }
             
         public static bool InsertStudent(Student student) {
